@@ -1,0 +1,197 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Start Timeline-->
+            <div class="col-lg-6 col-md-8">
+                <div class="row">
+                    <div class="col-md-12 card card-stats">
+                        <form>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <mat-form-field class="example-full-width">
+                                        <textarea id="status" name="status" matInput
+                                            placeholder="Nhập mội dung cần chia sẻ với mọi người"
+                                            [(ngModel)]="newFeedContent"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-8" style="width: 80%;">
+                                    <img style="float: left;"
+                                        src="http://localhost:8081/images/icons/picture-attachment-48.ico"
+                                        (click)="fileUpload.click();">
+                                    <label class="label">{{fileName}}</label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="width: 20%;">
+                                    <input style="float: right;background-color: #1877f2;" class="btn btn-info" type="button" value="Đăng"
+                                        (click)="postFeed();">
+                                </div>
+                            </div>
+                            <input type="file" class="form-control-file" style="display: none;"
+                                (change)="onFileSelected($event)" #fileUpload>
+                        </form>
+                    </div>
+                </div>
+                <!-- Start feeds -->
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-md-12 col-sm-12">
+                        <div class="row" *ngFor="let f of feeds">
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+                                <div class="card card-stats">
+                                    <div class="card-header card-header-warning card-header-icon">
+                                        <div class="card-icon">
+                                            <i class="material-icons"><img src="{{f.ownerInfo.image}}"
+                                                    style="max-width: 100%;max-height: 100%;" /></i>
+                                        </div>
+                                        <p class="card-title">{{f.ownerInfo.name}}</p>
+                                        <div class="card-footer"
+                                            style="float: right; margin:0px;padding: 0px 0px 8px 0px;">
+                                            <div class="stats">
+                                                <i class="material-icons"
+                                                    style="margin-top: -23px;margin-right: -16px;">access_time</i>{{f.postedDate}}
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid"
+                                            style="padding: 20px 0px 0px 0px;text-align: left;">
+                                            <div *ngIf="f.type === 1" class="container-fluid" style="padding: 0px;">
+                                                <a (click)="openLink(f.url);">
+                                                    <p class="text-muted" style="padding-top: 20px;" *ngIf="f.content !== undefined">{{f.content}}</p>
+                                                    <img *ngIf="f.images != undefined" src="{{f.images[0]}}"
+                                                        style="width: 100%;padding-bottom: 8px;" />
+                                                    <h3 class="text-muted" *ngIf="f.title !== undefined">
+                                                        {{f.title}}
+                                                    </h3>
+                                                </a>
+                                                <blockquote class="text-muted blockquote">
+                                                    <p *ngIf="f.desc !== undefined">{{f.desc}}</p>
+                                                </blockquote>
+                                            </div>
+
+                                            <div *ngIf="f.type === 0" class="container-fluid" style="padding: 0px;">
+                                                <img *ngIf="f.images != undefined" src="{{f.images[0]}}"
+                                                    style="width: 100%;padding-bottom: 8px;" />
+                                                <blockquote class="text-muted blockquote">
+                                                    <p *ngIf="f.content !== undefined">{{f.content}}</p>
+                                                </blockquote>
+                                            </div>
+
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div style="padding: 0px;width: 50%;">
+                                                        <span class="text-muted"
+                                                            style="padding-right: 8px;">{{f.likeCount}}Likes</span>
+                                                        <span><a class="text-muted" href="javascript:void(0)"
+                                                                (click)="showComments(f.id);">{{f.commentCount}}
+                                                                Comments</a></span>
+                                                    </div>
+                                                    <div style="width: 50%;">
+                                                        <a class="text-muted"
+                                                            *ngIf="f.likeUserIds !== undefined && f.likeUserIds.indexOf(',2') >= 0; else elseBlock"
+                                                            style="float: right;font-weight: bold;"
+                                                            href="javascript:void(0);">
+                                                            Liked
+                                                        </a>
+                                                        <ng-template #elseBlock>
+                                                            <a class="text-muted" id="like_{{f.id}}"
+                                                                (click)="like(f.id);"
+                                                                style="float: right;font-weight: bold;"
+                                                                href="javascript:void(0);">
+                                                                Like</a>
+                                                        </ng-template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid" style="border-top: 1px solid #eee;" id="feed_{{f.id}}">
+                                        <div *ngIf="f.comments !== undefined">
+                                            <div *ngFor="let cmt of f.comments">
+                                                <div *ngIf="cmt.type === 0" class="row" style="background-color: #eee;">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12" style='width:100%;'>
+                                                        <span class='card-title'><a style="font-weight: bold;"
+                                                                class="text-muted">{{cmt.profileName}}</a></span>
+                                                        <div class="card-footer"
+                                                            style="margin:0px;padding: 0px 0px 8px 0px;">
+                                                            <div class="stats">
+                                                                <i
+                                                                    class="material-icons">access_time</i>{{cmt.postedDate}}
+                                                            </div>
+                                                        </div>
+                                                        <p class="text-muted" style="margin: 0px;">
+                                                            {{cmt.comment}}</p>
+                                                        <div style="width: 100%;text-align: right;">
+                                                            <a style="font-weight: bold;" class="text-muted"
+                                                                (click)="reply(f.id,cmt.id,cmt.profileName);">Reply</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="cmt.type === 3" class="row" style="background-color: #eee;">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12" style='width:100%;'>
+                                                        <span style='width:100%;'><a style="font-weight: bold;"
+                                                                class="text-muted">{{cmt.profileName}}</a></span>
+                                                        <div class="card-footer"
+                                                            style="margin:0px;padding: 0px 0px 8px 0px;">
+                                                            <div class="stats">
+                                                                <i
+                                                                    class="material-icons">access_time</i>{{cmt.postedDate}}
+                                                            </div>
+                                                        </div>
+                                                        <p class="text-muted" style="padding-top: 20px;" *ngIf="cmt.comment !== undefined">{{cmt.comment}}</p>
+                                                        <a href="{{cmt.url}}" target='_blank'>
+                                                            <img src="{{cmt.image}}" style='max-width:100%;' />
+                                                            <h4 class="card-title" *ngIf="cmt.title != undefined">
+                                                                {{cmt.title}}
+                                                            </h4>
+                                                            <p class="text-muted" style="margin: 0px;"
+                                                                *ngIf="cmt.desc != undefined">{{cmt.desc}}</p>
+                                                        </a>
+                                                        <div style="width: 100%;text-align: right;">
+                                                            <a style="font-weight: bold;" class="text-muted"
+                                                                (click)="reply(f.id,cmt.id,cmt.profileName);">Reply</a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid">
+                                        <mat-form-field class="example-full-width">
+                                            <textarea id="cmt_{{f.id}}" matInput class="form-control"
+                                                style="width: 100%;" placeholder="Bình luận"
+                                                (keyup.enter)="submitComment(f.id);"
+                                                [(ngModel)]="newComments[f.id]"></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End feeds -->
+            </div>
+            <!-- End Timeline-->
+            
+            <!-- Start profile-->
+            <div class="col-lg-4 col-md-4">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="javascript:void(0)">
+                            <img class="img" src="http://localhost:8081/images/person/1625890608346.png" style="width: 130px;height: 130px;"/>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-category text-gray"></h6>
+                        <h4 class="card-title">Trịnh Văn Kiên</h4>
+                        <p class="card-description">
+                            Make your dream come true by actioning now.
+                        </p>
+                        <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a>
+                    </div>
+                </div>
+            </div>
+            <!-- End profile-->
+            <div class="col-lg-2 col-md-2 d-none d-md-block d-md-none"></div>
+        </div>
+    </div>
+</div>
