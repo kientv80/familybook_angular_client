@@ -1,5 +1,4 @@
 export class Result<Type> {
-    errorCode: number;
-    mgs: String;
     data: Type;
+    constructor(public errorCode: number, public mgs: String){}
 }

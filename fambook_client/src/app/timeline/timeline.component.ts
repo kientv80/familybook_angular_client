@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { collectExternalReferences } from '@angular/compiler';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FamBookService } from 'app/fam-book.service';
 import { Comment } from 'app/schema/comment';
@@ -13,29 +14,60 @@ import { UtilsService } from 'app/utils.service';
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute, private fambookservice: FamBookService, private utils: UtilsService) { }
   feeds: Feed[];
   result: Result<Feed[]>;
-  id: number;
+  id: number = undefined;
   newComments: string[] = [];
   newFeedContent: string;
   image: File[];
-  fileName : string = "";
+  fileName: string = "";
+  @Input() type: String;
+
+  constructor(private route: ActivatedRoute, private fambookservice: FamBookService, private utils: UtilsService) { }
+
   ngOnInit(): void {
-    const id = 2;//this.route.snapshot.queryParams["id"];
-    this.fambookservice.getTimelineFeeds(2).subscribe({
-      next: result => {
-        if (result.errorCode == 0) {
-          this.feeds = result.data;
-        } else {
-          console.log(result)
-        }
-      },
-      error: error => {
-        console.log(error);
-      }
+    this.loadFeeds();
+    this.route.url.subscribe(url => {
+      this.loadFeeds();
     });
+  }
+  loadFeeds() {
+
+    if (this.route.snapshot.paramMap.get('id') !== undefined)
+      this.id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (this.id === undefined || this.id === 0)
+      this.id = 2;
+
+    console.log(this.id);
+
+    if (this.type === "feed") {
+      this.fambookservice.getFeeds(this.id).subscribe({
+        next: result => {
+          if (result.errorCode == 0) {
+            this.feeds = result.data;
+          } else {
+            console.log(result)
+          }
+        },
+        error: error => {
+          console.log(error);
+        }
+      });
+    } else {
+      this.fambookservice.getTimelineFeeds(this.id).subscribe({
+        next: result => {
+          if (result.errorCode == 0) {
+            this.feeds = result.data;
+          } else {
+            console.log(result)
+          }
+        },
+        error: error => {
+          console.log(error);
+        }
+      });
+    }
   }
   openLink(url: string): void {
     this.utils.openLink(url);
@@ -109,12 +141,12 @@ export class TimelineComponent implements OnInit {
   postFeed(): void {
     this.fambookservice.postFeed(this.newFeedContent, this.image).subscribe({
       next: result => {
-        if(result.errorCode == 0){
+        if (result.errorCode == 0) {
           this.newFeedContent = "";
           this.feeds.unshift(result.data);
           this.fileName = "";
           this.image = null;
-        }else{
+        } else {
           console.log(result);
           alert(result.mgs);
         }
@@ -127,6 +159,9 @@ export class TimelineComponent implements OnInit {
   }
   onFileSelected(event): void {
     this.image = event.target.files;
-    this.fileName =  this.image[0].name;
+    this.fileName = this.image[0].name;
+  }
+  clickMe() {
+    alert(this.type);
   }
 }

@@ -2,6 +2,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit } from '@angular/core';
 import { FamBookService } from 'app/fam-book.service';
 import { Person } from 'app/schema/person';
+import { UtilsService } from 'app/utils.service';
 import { DynamicDataSource } from './DynamicDataSource';
 
 @Component({
@@ -14,7 +15,7 @@ export class FamilytreeComponent implements OnInit {
   treeControl: FlatTreeControl<Person>;
   dataSource: DynamicDataSource;
 
-  constructor(private famservice: FamBookService) {
+  constructor(private famservice: FamBookService, private util: UtilsService) {
   }
 
   ngOnInit(): void {
@@ -23,8 +24,11 @@ export class FamilytreeComponent implements OnInit {
     this.famservice.getMyFamilyTree().subscribe({
       next: result => {
         let persons: Person[] = [];
-        persons[0] = result.data;
+        var root = result.data;
+        root.level = 0;
+        persons[0] = root;
         this.dataSource.data = persons;
+        this.treeControl.expand(root);
       }
     });;
   }
@@ -39,34 +43,9 @@ export class FamilytreeComponent implements OnInit {
   hasChild = (_: number, _nodeData: Person) => true;
 
   loadParent(childId: number): void {
-    let index = this.dataSource.data.findIndex(person => person.id === childId)
-    if (index >= 0) {
-      let child: Person = this.dataSource.data[index];
-      this.famservice.getParent(childId).subscribe({
-        next: result => {
-          if (result.errorCode == 0) {
-            let parent: Person = result.data;
-            if (parent.children != undefined) {
-              parent.level = child.level;
-              this.dataSource.data.map(c => {
-                c.level = c.level + 1;
-              });
-              let current = this.dataSource.data;
-              this.dataSource.data = [];
-              this.dataSource.data[0] = parent;
-              this.dataSource.data.splice(1, current.length, ...current);
-              this.dataSource.dataChange.next(this.dataSource.data);
-              //this.treeControl.expand(parent);
-            }
-
-          } else {
-            console.log(result);
-          }
-        },
-        error: error => {
-          console.log(error);
-        }
-      });
-    }
+    this.dataSource.addParent(childId);
+  }
+  openInsideLink(url : string): void {
+    this.util.openInsideLink(url);
   }
 }

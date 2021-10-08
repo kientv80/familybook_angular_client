@@ -1,0 +1,124 @@
+<div class="main-content" *ngIf="editpperson !== undefined">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Edit Members Info</h4>
+                        <p class="card-category">Complete Members Info</p>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row" style="padding-top: 10px;padding-bottom: 10px;">
+                                <div class="col-md-12 card-profile" >
+                                    <div class="card-avatar" style="float: left;">
+                                        <input type="file" #image hidden (change)="onFileSelected($event)">
+                                        <a href="javascript:void(0)">
+                                            <img (click)="image.click();" [(src)]="editpperson.image" name="image" class="img"
+                                                style="width: 130px;height: 130px;">
+                                        </a>
+                                    </div>
+                                    <span  style="color: black;float: left;">{{fileName}}</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" *ngIf="addNew">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Select an option</mat-label>
+                                        <mat-select [(value)]="editpperson.relation">
+                                            <mat-option value="MOM">MOM</mat-option>
+                                            <mat-option value="DAD">DAD</mat-option>
+                                            <mat-option value="WIFE_OR_HUSBAND">WIFE_OR_HUSBAND</mat-option>
+                                            <mat-option value="KID">KID</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Fist Name" [(ngModel)]="editpperson.firstName" name="firstName"
+                                            type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Last Name" [(ngModel)]="editpperson.surname" name = "surname"
+                                            type="text">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="DoB" [(ngModel)]="editpperson.bornedDate" name="bornedDate"
+                                            type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Passed Date" [(ngModel)]="editpperson.passedDate" name="passedDate"
+                                            type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Phone" [(ngModel)]="editpperson.phoneNum" name="phoneNum"
+                                            type="text">
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Email address" [(ngModel)]="editpperson.email" name="email"
+                                            type="email">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Select an option</mat-label>
+                                        <mat-select [(value)]="editpperson.gender">
+                                            <mat-option>None</mat-option>
+                                            <mat-option value="MALE">MALE</mat-option>
+                                            <mat-option value="FEMALE">FEMALE</mat-option>
+                                            <mat-option value="OTHER">OTHER</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Login Name" [(ngModel)]="editpperson.userName" name = "userName"
+                                            type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Adress" type="text">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>About</label>
+                                    <mat-form-field class="example-full-width">
+                                        <textarea matInput
+                                            placeholder="Say something about this member" [(ngModel)]="editpperson.desc" name="desc" ></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button *ngIf="!addNew" (click)="save();" mat-raised-button type="submit"
+                                class="btn btn-danger pull-right">Update Profile</button>
+                                <button *ngIf="addNew" (click)="save();" mat-raised-button type="submit"
+                                class="btn btn-danger pull-right">Add New</button>
+                                <button (click)="close();" mat-raised-button type="submit"
+                                class="btn btn-danger pull-right">Close</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

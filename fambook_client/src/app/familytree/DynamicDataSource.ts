@@ -53,7 +53,7 @@ export class DynamicDataSource implements DataSource<Person> {
      * Toggle the node, remove from display list
      */
     toggleNode(node: Person, expand: boolean) {
-        if (node.children === undefined) {
+        if (node !== undefined && node.children === undefined) {
             this.famservice.getChildren(node.id).subscribe({
                 next: result => {
                     if (result.errorCode == 0) {
@@ -109,6 +109,42 @@ export class DynamicDataSource implements DataSource<Person> {
             // notify the change
             this.dataChange.next(this.data);
             node.isLoading = false;
-        }, 500);
+        }, 1000);
+    }
+    addParent(childId: number): void {
+        let index = this.data.findIndex(person => person.id === childId)
+        if (index >= 0) {
+            let child: Person = this.data[index];
+            this.famservice.getParent(childId).subscribe({
+                next: result => {
+                    child.isLoading = true;
+                    setTimeout(() => {
+                        if (result.errorCode === 0 && result.data !== undefined) {
+                            let parent: Person = result.data;
+                            if (parent.children != undefined) {
+                                parent.level = child.level;
+                                this.data.map(c => {
+                                    c.level = c.level + 1;
+                                });
+                                let current = this.data;
+                                this.data = [];
+                                this.data[0] = parent;
+                                this.data.splice(1, current.length, ...current);
+                                // notify the change
+                                this.dataChange.next(this.data);
+                                //this.treeControl.expand(parent);
+                            }
+
+                        } else if (result.errorCode !== 0) {
+                            console.log(result);
+                        }
+                        child.isLoading = false;
+                    }, 1000);
+                },
+                error: error => {
+                    console.log(error);
+                }
+            });
+        }
     }
 }

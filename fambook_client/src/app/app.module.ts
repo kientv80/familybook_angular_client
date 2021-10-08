@@ -14,6 +14,10 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { BrowserModule } from '@angular/platform-browser';
 import { FambookLayoutComponent } from './layouts/fambook-layout/fambook-layout.component';
 import { FambookLayoutModule } from './layouts/fambook-layout/fambook-layout.module';
+import { FammembersComponent } from './fammembers/fammembers.component';
+import { RelationrequestComponent } from './relationrequest/relationrequest.component';
+import { ProfileComponent } from './profile/profile.component';
+import { RelationComponent } from './relation/relation.component';
 
 @NgModule({
     imports: [
@@ -35,6 +39,7 @@ import { FambookLayoutModule } from './layouts/fambook-layout/fambook-layout.mod
         AppComponent,
         AdminLayoutComponent,
         FambookLayoutComponent,
+        
     ],
     providers: [],
     bootstrap: [AppComponent]

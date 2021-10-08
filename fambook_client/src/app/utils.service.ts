@@ -9,6 +9,8 @@ export class UtilsService {
   
   openLink(url : string): void {
     window.open(url,"_blank");
-    
+  }
+  openInsideLink(url : string): void {
+    window.open(url,"_parent");
   }
 }

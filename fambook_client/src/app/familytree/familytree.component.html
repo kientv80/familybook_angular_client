@@ -1,23 +1,22 @@
-<div class="main-content">
-  <div class="container-fluid" style="color: black;overflow-x: scroll;">
-    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+<div class="main-content" style="padding-left: 0px;padding-right: 0px;">
+  <div class="container-fluid" style="color: black;overflow-x: auto;">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" style="color: black;width: fit-content;min-width: 100%;">
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
         <button mat-icon-button disabled></button>
-        <img src="{{node.image}}" class="image" style="width: 50px;height: 50px;">
-        {{node.name}}
-        <a (click)="loadParent(node.id);">Parent</a>
       </mat-tree-node>
-      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+      <mat-tree-node  *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
         <button mat-icon-button [attr.aria-label]="'Toggle ' + node.item" matTreeNodeToggle>
           <mat-icon class="mat-icon-rtl-mirror">
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>
         </button>
-        <img src="{{node.image}}" class="image" style="width: 50px;height: 50px;">
-        {{node.name}}
-        <a (click)="loadParent(node.id);" *ngIf="node.level===undefined || node.level === 1">Parent</a>
-        <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate" class="example-tree-progress-bar">
-        </mat-progress-bar>
+        <div style="padding: 4px;margin: 0px; width: 250px">
+          <img src="{{node.image}}"  class="img-thumbnail" style="width: 50px;height: 50px;" [routerLink]="['/../feed/',node.id]">
+          <span style="padding-left: 4px;" [routerLink]="['/../feed/',node.id]">{{node.name}}</span> 
+          <img style="padding-left: 8px;" (click)="loadParent(node.id);" *ngIf="node.level===undefined || node.level === 0" src="http://localhost:8081/images/icons/arrow-141-32.ico">
+          <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate" class="example-tree-progress-bar">
+          </mat-progress-bar>
+        </div>
       </mat-tree-node>
     </mat-tree>
   </div>

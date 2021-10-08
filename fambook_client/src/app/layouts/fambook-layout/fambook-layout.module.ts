@@ -15,10 +15,23 @@ import { FamilytreeComponent } from 'app/familytree/familytree.component';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { FeedComponent } from 'app/feed/feed.component';
+import { FammembersComponent } from 'app/fammembers/fammembers.component';
+import { RelationrequestComponent } from 'app/relationrequest/relationrequest.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ProfileComponent } from 'app/profile/profile.component';
+import { RelationComponent } from 'app/relation/relation.component';
+
+
 @NgModule({
   declarations: [
     TimelineComponent,
     FamilytreeComponent,
+    FeedComponent,
+    FammembersComponent,
+    RelationrequestComponent,
+    ProfileComponent,
+    RelationComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +47,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     YouTubePlayerModule,
     MatTreeModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDialogModule
   ]
 })
 export class FambookLayoutModule { }

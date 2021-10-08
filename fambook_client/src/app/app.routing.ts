@@ -8,12 +8,12 @@ import { FambookLayoutComponent } from './layouts/fambook-layout/fambook-layout.
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'NA',
     redirectTo: 'dashboard',
     pathMatch: 'full',
   }, 
   {
-    path: '',
+    path: 'admin',
     component: AdminLayoutComponent,
     children: [
       {

@@ -7,6 +7,7 @@ import { HttpClientHelperService } from './http-client-helper.service';
 import { Comment } from './schema/comment';
 import { Action } from './schema/action';
 import { Person } from './schema/person';
+import { Relation } from './schema/relation';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,9 +25,14 @@ export class FamBookService {
 
 
   getTimelineFeeds(id: number): Observable<Result<Feed[]>> {
-    return this.httpClient.get<Feed[]>("http://localhost:8081/service/timelinefeed/2");
+    return this.httpClient.get<Feed[]>("http://localhost:8081/service/timelinefeed/" + id);
   }
-
+  getFeeds(id: number): Observable<Result<Feed[]>> {
+    return this.httpClient.get<Feed[]>("http://localhost:8081/service/feed/" + id);
+  }
+  getMyAddedFamilyMembers(): Observable<Result<Person[]>> {
+    return this.httpClient.get<Person[]>("http://localhost:8081/service/members");
+  }
   getComments(feedId: number): Observable<Result<Comment[]>> {
     return this.httpClient.get<Comment[]>("http://localhost:8081/service/comment/" + feedId);
   }
@@ -37,7 +43,9 @@ export class FamBookService {
   getParent(childId: number): Observable<Result<Person>> {
     return this.httpClient.get<Person>("http://localhost:8081/service/loadparent?id=" + childId);
   }
-
+  getRelations(id: number): Observable<Result<Relation[]>> {
+    return this.httpClient.get<Relation[]>("http://localhost:8081/service/relation?id=" + id);
+  }
   postComment(comment: Comment): Observable<Result<Comment>> {
     //var params = {"feedId":feedId,"comment":comment,"replyCommentId":0};
     return this.httpClient.post<Comment>("http://localhost:8081/service/comment", comment);
@@ -64,6 +72,12 @@ export class FamBookService {
     formData.append("sharedLevel", "2");
 
     return this.httpClient.post<Feed>("http://localhost:8081/service/postnewfeed", formData);
+  }
+  postUpdateProfile(data: FormData):Observable<Result<Person>>{
+    return this.httpClient.post<Person>("http://localhost:8081/service/editprofile", data);
+  }
+  postAddProfile(data: FormData):Observable<Result<Person>>{
+    return this.httpClient.post<Person>("http://localhost:8081/service/addprofile", data);
   }
   postLike(feedId: string): Observable<Result<Action>> {
     const formData = new FormData();
