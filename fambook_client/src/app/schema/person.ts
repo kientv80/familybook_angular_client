@@ -4,7 +4,7 @@ export class Person {
     isLoading: boolean = false;
     bornedDate: string = "";
     firstName: string = "";
-    surname: string = "";
+    lastName: string = "";
     passedDate: string = "";
     email: string = "";
     phoneNum: string = "";
@@ -13,5 +13,7 @@ export class Person {
     userName: string = "";
     relation: string = "";
     relationId: number;
+    passWorld: string;
+    rpassWorld: string;
     constructor(public id: number = -1, public name: string = "", public level: number = 1, public expandable = false) { }
 }

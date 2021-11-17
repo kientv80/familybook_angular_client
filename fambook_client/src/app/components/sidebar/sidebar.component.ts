@@ -8,10 +8,9 @@ declare interface RouteInfo {
     class: string;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/feed/2', title: 'Home',  icon:'person', class: '' },
     { path: '/timeline/2', title: 'Bài Viết',  icon: 'library_books', class: '' },
     { path: '/farmily', title: 'Gia Phả',  icon: 'bubble_chart', class: '' },
-    { path: '/fammembers', title: 'Quan Lý Thành Viên',  icon: 'content_paste', class: '' },
+    { path: '/fammembers', title: 'Quan Lý Thành Viên',  icon: 'person', class: '' },
     { path: '/relationrequest', title: 'Yêu Cầu Kết Nối',  icon:'notifications', class: '' },
     { path: '/typography', title: 'Typography',  icon:'library_books', class: '' },
     { path: '/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
@@ -28,7 +27,7 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   menuItems: any[];
-
+  home:string = "/feed/2";
   constructor() { }
 
   ngOnInit() {

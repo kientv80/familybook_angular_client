@@ -24,12 +24,12 @@
                             <div class="row">
                                 <div class="col-md-6" *ngIf="addNew">
                                     <mat-form-field appearance="fill">
-                                        <mat-label>Select an option</mat-label>
+                                        <mat-label>Chọn quan hệ gia đình</mat-label>
                                         <mat-select [(value)]="editpperson.relation">
-                                            <mat-option value="MOM">MOM</mat-option>
-                                            <mat-option value="DAD">DAD</mat-option>
-                                            <mat-option value="WIFE_OR_HUSBAND">WIFE_OR_HUSBAND</mat-option>
-                                            <mat-option value="KID">KID</mat-option>
+                                            <mat-option value="MOM">Mẹ</mat-option>
+                                            <mat-option value="DAD">Bố</mat-option>
+                                            <mat-option value="WIFE_OR_HUSBAND">Vợ, Chồng</mat-option>
+                                            <mat-option value="KID">Con</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
@@ -37,13 +37,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Fist Name" [(ngModel)]="editpperson.firstName" name="firstName"
+                                        <input matInput placeholder="Tên" [(ngModel)]="editpperson.firstName" name="firstName"
                                             type="text">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Last Name" [(ngModel)]="editpperson.surname" name = "surname"
+                                        <input matInput placeholder="Họ" [(ngModel)]="editpperson.lastName" name = "surname"
                                             type="text">
                                     </mat-form-field>
                                 </div>
@@ -51,69 +51,84 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="DoB" [(ngModel)]="editpperson.bornedDate" name="bornedDate"
+                                        <input matInput placeholder="Ngày sinh" [(ngModel)]="editpperson.bornedDate" name="bornedDate"
                                             type="text">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-2">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Passed Date" [(ngModel)]="editpperson.passedDate" name="passedDate"
+                                        <input matInput placeholder="Ngày mất" [(ngModel)]="editpperson.passedDate" name="passedDate"
                                             type="text">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Phone" [(ngModel)]="editpperson.phoneNum" name="phoneNum"
+                                        <input matInput placeholder="SĐT" [(ngModel)]="editpperson.phoneNum" name="phoneNum"
                                             type="text">
                                     </mat-form-field>
                                 </div>
 
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Email address" [(ngModel)]="editpperson.email" name="email"
+                                        <input matInput placeholder="Địa chỉ Email" [(ngModel)]="editpperson.email" name="email"
                                             type="email">
                                     </mat-form-field>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <mat-form-field appearance="fill">
-                                        <mat-label>Select an option</mat-label>
+                                        <mat-label>Chọn Giới Tính</mat-label>
                                         <mat-select [(value)]="editpperson.gender">
-                                            <mat-option>None</mat-option>
-                                            <mat-option value="MALE">MALE</mat-option>
-                                            <mat-option value="FEMALE">FEMALE</mat-option>
-                                            <mat-option value="OTHER">OTHER</mat-option>
+                                            <mat-option value="MALE">Nam</mat-option>
+                                            <mat-option value="FEMALE">Nữ</mat-option>
+                                            <mat-option value="OTHER">Khác</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
+                                
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Địa chỉ" type="text">
+                                    </mat-form-field>
+                                </div>
+                               
+                            </div>
+                            <div class="row">
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Login Name" [(ngModel)]="editpperson.userName" name = "userName"
+                                        <input matInput placeholder="Tên đăng nhập" [(ngModel)]="editpperson.userName" name = "userName"
                                             type="text">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Adress" type="text">
+                                    <mat-form-field class="example-full-width" *ngIf="addNew">
+                                        <input matInput placeholder="Mã đăng nhập" [(ngModel)]="editpperson.passWord" name = "passWord"
+                                            type="password">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width" *ngIf="addNew">
+                                        <input matInput placeholder="Nhập lại mã đăng nhập" [(ngModel)]="editpperson.rpassWord" name = "rpassWord"
+                                            type="password">
                                     </mat-form-field>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>About</label>
+                                    <label>Thông tin</label>
                                     <mat-form-field class="example-full-width">
                                         <textarea matInput
-                                            placeholder="Say something about this member" [(ngModel)]="editpperson.desc" name="desc" ></textarea>
+                                            placeholder="Viết điều gì đó về người này" [(ngModel)]="editpperson.desc" name="desc" ></textarea>
                                     </mat-form-field>
                                 </div>
                             </div>
                             <button *ngIf="!addNew" (click)="save();" mat-raised-button type="submit"
-                                class="btn btn-danger pull-right">Update Profile</button>
+                                class="btn btn-danger pull-right">Cập Nhật</button>
                                 <button *ngIf="addNew" (click)="save();" mat-raised-button type="submit"
-                                class="btn btn-danger pull-right">Add New</button>
+                                class="btn btn-danger pull-right">Thêm Mới</button>
                                 <button (click)="close();" mat-raised-button type="submit"
-                                class="btn btn-danger pull-right">Close</button>
+                                class="btn btn-danger pull-right">Đóng</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

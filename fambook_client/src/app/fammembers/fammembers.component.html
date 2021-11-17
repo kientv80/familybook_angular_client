@@ -12,9 +12,9 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Image</th>
-                                    <th>Action</th>
+                                    <th>Tên</th>
+                                    <th>Hình</th>
+                                    <th>Thao Tác</th>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let p of persons">
@@ -22,13 +22,13 @@
                                         <td>{{p.name}}</td>
                                         <td>
                                             <img src="{{p.image}}" class="img-thumbnail"
-                                                style="width: 100px;height: 100px;">
+                                                style="max-width: 80px;max-height: 80px;">
                                         </td>
                                         <td class="text-primary">
-                                            <a (click)="add(p.id);" href="javascript:void(0)"> Add </a> |
-                                            <a (click)="edit(p.id);" href="javascript:void(0)"> Edit </a> |
-                                            <a (click)="delete(p.id);" href="javascript:void(0)"> Delete </a> | 
-                                            <a (click)="relationTmp.loadRelations(p.id);showRelations();" href="javascript:void(0)"> Relations </a>
+                                            <a (click)="add(p.id);" href="javascript:void(0)"> Thêm </a> |
+                                            <a (click)="edit(p.id);" href="javascript:void(0)"> Sửa </a> |
+                                            <a (click)="delete(p.id);" href="javascript:void(0)"> Xóa </a> | 
+                                            <a (click)="relationTmp.loadRelations(p.id,p.name);showRelations();" href="javascript:void(0)"> Người Thân </a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -41,4 +41,4 @@
     </div>
 </div>
 <app-profile [editpperson]="editpperson" [addNew]="addNew" (profileEvent)="onSubmit($event)"></app-profile>
-<app-relation (relationEvent)="onRelationEvent($event)" #relationTmp [profileId]="relationId"></app-relation>
+<app-relation (relationEvent)="onRelationEvent($event)" #relationTmp ></app-relation>

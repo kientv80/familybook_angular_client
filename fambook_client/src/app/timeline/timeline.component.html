@@ -34,7 +34,7 @@
                 </div>
                 <!-- Start feeds -->
                 <div class="row">
-                    <div class="col-md-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
                         <div class="row" *ngFor="let f of feeds">
                             <div class="col-lg-12 col-md-12 col-sm-12" style="padding-left: 0px;padding-right: 0px;">
                                 <div class="card card-stats">
@@ -84,24 +84,24 @@
                                                 <div class="row">
                                                     <div style="padding: 0px;width: 50%;">
                                                         <span class="text-muted"
-                                                            style="padding-right: 8px;">{{f.likeCount}}Likes</span>
+                                                            style="padding-right: 8px;">{{f.likeCount}}Thích</span>
                                                         <span><a class="text-muted" href="javascript:void(0)"
                                                                 (click)="showComments(f.id);">{{f.commentCount}}
-                                                                Comments</a></span>
+                                                                Bình Luận</a></span>
                                                     </div>
                                                     <div style="width: 50%;">
                                                         <a class="text-muted"
                                                             *ngIf="f.likeUserIds !== undefined && f.likeUserIds.indexOf(',2') >= 0; else elseBlock"
                                                             style="float: right;font-weight: bold;"
                                                             href="javascript:void(0);">
-                                                            Liked
+                                                            Đã Thích
                                                         </a>
                                                         <ng-template #elseBlock>
                                                             <a class="text-muted" id="like_{{f.id}}"
                                                                 (click)="like(f.id);"
                                                                 style="float: right;font-weight: bold;"
                                                                 href="javascript:void(0);">
-                                                                Like</a>
+                                                                Thích</a>
                                                         </ng-template>
                                                     </div>
                                                 </div>
@@ -153,7 +153,7 @@
                                                         </a>
                                                         <div style="width: 100%;text-align: right;">
                                                             <a style="font-weight: bold;" class="text-muted"
-                                                                (click)="reply(f.id,cmt.id,cmt.profileName);">Reply</a>
+                                                                (click)="reply(f.id,cmt.id,cmt.profileName);">Trả Lời</a>
                                                         </div>
                                                     </div>
 

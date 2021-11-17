@@ -1,0 +1,14 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <h2 mat-dialog-title>{{notifyInfo.title}}</h2>
+        <mat-dialog-content>
+           <p>{{notifyInfo.content}}</p> 
+        </mat-dialog-content>
+
+        <mat-dialog-actions>
+            <button (click)="ok();" mat-raised-button color="primary"
+                *ngIf="notifyInfo.showBtn">{{notifyInfo.okLabel}}</button>
+            <button (click)="close();" mat-raised-button>{{notifyInfo.cancelLavel}}</button>
+        </mat-dialog-actions>
+    </div>
+</div>

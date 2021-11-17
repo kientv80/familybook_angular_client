@@ -14,9 +14,9 @@ export class ProfileComponent implements OnInit {
   @Output() profileEvent = new EventEmitter<Result<any>>();
   image: File[];
   fileName: string;
-  
 
-  constructor(private fbservice : FamBookService) { }
+
+  constructor(private fbservice: FamBookService) { }
 
   ngOnInit(): void {
   }
@@ -24,10 +24,13 @@ export class ProfileComponent implements OnInit {
 
   save(): void {
     const formData = new FormData();
-    if (this.image !== undefined && this.image.length > 0)
+
+    if (this.image !== undefined && this.image.length > 0) {
       formData.append("image", this.image[0]);
+    }
+    debugger
     formData.append("profile", JSON.stringify(this.editpperson));
-    
+
     if (!this.addNew) {
       this.fbservice.postUpdateProfile(formData).subscribe({
         next: result => {
@@ -42,35 +45,40 @@ export class ProfileComponent implements OnInit {
         },
         error: error => {
           console.log(error);
-          this.profileEvent.emit(new Result(-1,"faile"));
+          this.profileEvent.emit(new Result(-1, "faile"));
         }
       });
     } else {
-      this.fbservice.postAddProfile(formData).subscribe({
-        next: result => {
-          if (result.errorCode === 0) {
-            this.clearSelect();
-            this.close();
-            this.addNew = false;
-            console.log(result.mgs);
-          } else {
-            console.log(result);
+      if (this.editpperson.passWorld !== undefined && this.editpperson.passWorld !== this.editpperson.rpassWorld) {
+        alert("invalid password");
+      } else {
+        this.fbservice.postAddProfile(formData).subscribe({
+          next: result => {
+            if (result.errorCode === 0) {
+              this.clearSelect();
+              this.close();
+              this.addNew = false;
+              console.log(result.mgs);
+            } else {
+              console.log(result);
+            }
+            this.profileEvent.emit(result);
+          },
+          error: error => {
+            console.log(error);
+            this.profileEvent.emit(new Result(-1, "faile"));
           }
-          this.profileEvent.emit(result);
-        },
-        error: error => {
-          console.log(error);
-          this.profileEvent.emit(new Result(-1,"faile"));
-        }
-      });
+        });
+      }
     }
+
 
   }
   close(): void {
     this.editpperson = undefined;
     this.fileName = undefined;
     this.image = undefined;
-    this.profileEvent.emit(new Result(0,"closed"));
+    this.profileEvent.emit(new Result(0, "closed"));
   }
   onFileSelected(event): void {
     this.image = event.target.files;

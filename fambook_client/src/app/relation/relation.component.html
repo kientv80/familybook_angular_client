@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Relations</h4>
+                        <h4 class="card-title ">{{profileName}}</h4>
                         <p class="card-category">List relation members</p>
                     </div>
                     <div class="card-body">
@@ -12,10 +12,10 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Image</th>
-                                    <th>Type</th>
-                                    <th>Action</th>
+                                    <th>Tên</th>
+                                    <th>Hình</th>
+                                    <th>Mối Quan Hệ</th>
+                                    <th>Thao Tác</th>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let r of relations">
@@ -25,11 +25,10 @@
                                             <img src="{{r.relation.image}}" class="img-thumbnail"
                                                 style="max-width: 100px;max-height: 100px;">
                                         </td>
-                                        <td>{{r.type}}</td>
+                                        <td>{{toVN(r.type)}}</td>
                                         <td class="text-primary">
-                                            <a (click)="add(p.id);" href="javascript:void(0)"> Add </a> |
-                                            <a (click)="edit(p.id);" href="javascript:void(0)"> Edit </a> |
-                                            <a (click)="delete(p.id);" href="javascript:void(0)"> Delete </a>
+                                            <a (click)="edit(p.id);" href="javascript:void(0)"> Sửa </a> |
+                                            <a (click)="delRelation(r.id);" href="javascript:void(0)"> Xóa </a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -37,9 +36,10 @@
                         </div>
                     </div>
                 </div>
-                
+                <button (click)="addRelation();" mat-raised-button type="submit"
+                    class="btn btn-danger pull-right">Thêm</button>
                 <button (click)="close();" mat-raised-button type="submit"
-                    class="btn btn-danger pull-right">Close</button>
+                    class="btn btn-danger pull-right">Đóng</button>
                 <div class="clearfix"></div>
             </div>
         </div>

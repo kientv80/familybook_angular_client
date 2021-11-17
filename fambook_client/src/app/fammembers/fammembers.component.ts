@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CallBack } from 'app/callback';
 import { FamBookService } from 'app/fam-book.service';
 import { Person } from 'app/schema/person';
 import { Result } from 'app/schema/result';
@@ -8,7 +9,7 @@ import { Result } from 'app/schema/result';
   templateUrl: './fammembers.component.html',
   styleUrls: ['./fammembers.component.css']
 })
-export class FammembersComponent implements OnInit {
+export class FammembersComponent implements OnInit{
 
   constructor(private fbservice: FamBookService) { }
   persons: Person[];
@@ -49,7 +50,18 @@ export class FammembersComponent implements OnInit {
     this.editpperson.relationId = id;
   }
   delete(id: number): void {
-
+    this.fbservice.delProfile(id).subscribe({
+      next: result => {
+        if (result.errorCode === 0) {
+          this.persons = this.persons.filter(p=> p.id != id);
+        } else {
+          console.log(result);
+        }
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
   }
 
   showRelations(): void {
@@ -58,4 +70,5 @@ export class FammembersComponent implements OnInit {
   onRelationEvent(event): void {
     this.showRelation = false;
   }
+  
 }

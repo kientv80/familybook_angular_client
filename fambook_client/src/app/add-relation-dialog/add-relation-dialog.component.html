@@ -1,0 +1,23 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="logo-img">
+      <img class="img" style="border-radius: 25px;width: 200px;height: 200px;" src="{{person.image}}" />
+    </div>
+    <p>{{person.name}}</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Chọn mối quan hệ</mat-label>
+      <mat-select [(value)]="selected" required [formControl]="relationType">
+        <mat-option value="mom">Mẹ</mat-option>
+        <mat-option value="dad">Bố</mat-option>
+        <mat-option value="kid">Con</mat-option>
+        <mat-option value="wife">Vợ</mat-option>
+        <mat-option value="husband">Chồng</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-error *ngIf="relationType.invalid">{{getErrorMessage()}}</mat-error>
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" (click)="submit();">OK</button>
+      <button mat-raised-button (click)="cancel();">Bỏ Qua</button>
+    </mat-dialog-actions>
+  </div>
+</div>

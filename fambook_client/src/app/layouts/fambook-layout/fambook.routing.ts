@@ -3,6 +3,7 @@ import { FamilytreeComponent } from "app/familytree/familytree.component";
 import { FammembersComponent } from "app/fammembers/fammembers.component";
 import { FeedComponent } from "app/feed/feed.component";
 import { RelationrequestComponent } from "app/relationrequest/relationrequest.component";
+import { SearchComponent } from "app/search/search.component";
 import { TimelineComponent } from "app/timeline/timeline.component";
 
 export const FambookRoutes: Routes = [
@@ -11,4 +12,5 @@ export const FambookRoutes: Routes = [
     { path: 'farmily', component: FamilytreeComponent },
     { path: 'fammembers', component: FammembersComponent },
     { path: 'relationrequest', component: RelationrequestComponent },
+    { path: 'search', component: SearchComponent },
 ];

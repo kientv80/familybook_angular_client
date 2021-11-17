@@ -21,6 +21,10 @@ import { RelationrequestComponent } from 'app/relationrequest/relationrequest.co
 import {MatDialogModule} from '@angular/material/dialog';
 import { ProfileComponent } from 'app/profile/profile.component';
 import { RelationComponent } from 'app/relation/relation.component';
+import { SidebarComponent } from 'app/components/sidebar/sidebar.component';
+import { SearchComponent } from '../../search/search.component';
+import { AddRelationDialogComponent } from '../../add-relation-dialog/add-relation-dialog.component';
+import { NotifydaialogComponent } from '../../notifydaialog/notifydaialog.component';
 
 
 @NgModule({
@@ -32,6 +36,10 @@ import { RelationComponent } from 'app/relation/relation.component';
     RelationrequestComponent,
     ProfileComponent,
     RelationComponent,
+    SearchComponent,
+    AddRelationDialogComponent,
+    NotifydaialogComponent,
+
   ],
   imports: [
     CommonModule,
@@ -48,7 +56,7 @@ import { RelationComponent } from 'app/relation/relation.component';
     MatTreeModule,
     MatIconModule,
     MatProgressBarModule,
-    MatDialogModule
+    MatDialogModule,
   ]
 })
 export class FambookLayoutModule { }

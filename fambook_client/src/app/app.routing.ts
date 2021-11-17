@@ -27,6 +27,12 @@ const routes: Routes = [
     component: FambookLayoutComponent,
     loadChildren: './layouts/fambook-layout/fambook-layout.module#FambookLayoutModule'
   }
+  ,
+  {
+    path: 'feed',
+    component: FambookLayoutComponent,
+    loadChildren: './layouts/fambook-layout/fambook-layout.module#FambookLayoutModule'
+  }
 ];
 
 @NgModule({
